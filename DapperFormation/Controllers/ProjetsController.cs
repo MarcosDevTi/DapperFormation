@@ -3,6 +3,7 @@ using DapperFormation.EfPreparation;
 using DapperFormation.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -13,15 +14,16 @@ namespace DapperFormation.Controllers
     public class ProjetsController : Controller
     {
         private readonly EfContext _efContext;
-        private readonly IDbConnection connection;
-
-        public ProjetsController(EfContext efContext)
+        private readonly IDbConnection _dapperConnection;
+        private readonly IConfiguration _configuration;
+        public ProjetsController(EfContext efContext, IConfiguration configuration)
         {
             _efContext = efContext;
+            _configuration = configuration;
 
-            var conn = new SqliteConnection($"Data Source=FormationDb.sqlite");
-            conn.Open();
-            connection = conn;
+            var connection = new SqliteConnection(_configuration.GetConnectionString("DefaultConnection"));
+            connection.Open();
+            _dapperConnection = connection;
         }
 
         public async Task<IActionResult> Index()
@@ -31,7 +33,6 @@ namespace DapperFormation.Controllers
             var projets = _efContext.ProjetsIncludeAll().OrderBy(p => p.Nom);
             return View(projetsDapper);
         }
-
 
         public async Task<IEnumerable<Projet>> ObtenirProjets()
         {
@@ -61,7 +62,7 @@ namespace DapperFormation.Controllers
             var blequerDeclaration = false;
             var pjDict = new Dictionary<int, PieceJointe>();
 
-            var resultat = await connection.QueryAsync<Projet, Declaration, PieceJointe, Document, Attestation, Professionnel, Projet>(sql,
+            var resultat = await _dapperConnection.QueryAsync<Projet, Declaration, PieceJointe, Document, Attestation, Professionnel, Projet>(sql,
                   (p, d, pj, doc, attest, prof) =>
                   {
                       if (!projDect.TryGetValue(p.Id, out Projet projet))

@@ -19,7 +19,7 @@ namespace DapperFormation
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<EfContext>(conn => conn.UseSqlite("Data Source=FormationDb.sqlite"));
+            services.AddDbContext<EfContext>(conn => conn.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
         }
 
