@@ -4,33 +4,35 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-light">Projets</h1>
+<h1>Projets</h1>
 
-<ul class="list-group bg-dark">
+<ul class="list-group">
     @foreach (var projet in Model)
     {
-        <li class="list-group-item mb-1 bg-secondary">
+        <li class="list-group-item">
             <div class="card bg-secondary">
                 <div class="card-body">
                     <h2 class="card-title text-light">@projet.Nom</h2>
-                    <ul class="list-group list-group-flush bg-secondary">
+                    <ul class="list-group list-group-flush">
                         @foreach (var declaration in projet.Declarations)
                         {
                             <li class="list-group-item mb-1 bg-dark">
-                                <h3 class="card-title text-light">@declaration.Nom</h3>
-                                <ul class=" list-group list-group-flush">
-                                    @foreach (var piece in declaration.PiecesJointes)
+                                <h3 class="card-titre">@declaration.Nom</h3>
+                                <ul class="list-group list-group-flush">
+                                    @foreach (var pieceJointe in declaration.PiecesJointes)
                                     {
-                                        <li class="list-group-item list-pj mb-1 bg-secondary text-light">
-                                            <div class="card pl-2 bg-dark ">
-                                                <h5 class="card-title mb-1 text-light">@piece.Titre</h5>
-
-                                                <div class="ml-2">
-                                                    <div class="card mb-1 mr-1 bg-secondary bg-gradient">@piece.Document.NomFichier</div>
-
-                                                    <div class="card mb-1 mr-1 bg-secondary bg-gradient">
-                                                        <h6 class="ml-1">@piece.Attestation.Nom</h6>
-                                                        <div class="card ml-4 mb-1 mr-2 bg-dark">@piece.Attestation.Professionnel.Nom</div>
+                                        <li class="list-group-item mb-1 bg-secondary">
+                                            <div class="card p-1">
+                                                <h5 class="card-title mb-1">@pieceJointe.Titre</h5>
+                                                <div>
+                                                    <div class="card bg-secondary mb-1 pl-1">@pieceJointe.Document.NomFichier</div>
+                                                    <div class="card bg-secondary p-1">
+                                                        <h6>
+                                                            @pieceJointe.Attestation.Nom
+                                                        </h6>
+                                                        <div class="card bg-dark pl-1">
+                                                            @pieceJointe.Attestation.Professionnel.Nom
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
