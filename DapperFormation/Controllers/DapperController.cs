@@ -61,11 +61,9 @@ namespace DapperFormation.Controllers
 
                     if (decl is not null)
                     {
-                        var estDeclarationDejaAjoute = dicDecl.TryGetValue(decl.Id, out Declaration declaration);
-                        if (!estDeclarationDejaAjoute)
-                        {
+                        var estDéclarationDéjàSélectionné = dicDecl.TryGetValue(decl.Id, out Declaration declaration);
+                        if (!estDéclarationDéjàSélectionné)
                             dicDecl.Add(decl.Id, declaration = decl);
-                        }
 
                         if (declaration.PiecesJointes is null)
                             declaration.PiecesJointes = new List<PieceJointe>();
@@ -88,12 +86,13 @@ namespace DapperFormation.Controllers
                             ((IList<PieceJointe>)declaration.PiecesJointes).Add(pieceJointe);
                         }
 
-                        if (!estDeclarationDejaAjoute)
+                        if (!estDéclarationDéjàSélectionné)
                             ((IList<Declaration>)projet.Declarations).Add(declaration);
                     }
 
                     return proj;
-                }, splitOn: "id, code, id, id, id");
+                },  /*👉*/ splitOn: "id, code, id, id, id");
+
             return View(dictProjet.Values);
         }
     }
