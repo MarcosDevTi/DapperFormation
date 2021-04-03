@@ -9,7 +9,7 @@ namespace DapperFormation.EfPreparation.Maps
         public void Configure(EntityTypeBuilder<PieceJointe> builder)
         {
             builder.ToTable("oe_piece_jointe");
-            builder.Property(p => p.Id).HasColumnName("id");
+            builder.HasKey(p => p.Code).HasName("code");
             builder.Property(p => p.DocumentId).HasColumnName("id_document");
             builder.Property(p => p.AttestationId).HasColumnName("id_attestation");
             builder.Property(p => p.DeclarationId).HasColumnName("id_declaration");

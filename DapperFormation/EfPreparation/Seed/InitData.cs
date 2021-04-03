@@ -16,22 +16,43 @@ namespace DapperFormation.EfPreparation.Seed
                     {
                         new Declaration
                         {
-                            Nom = "Déclaration 01 - projet 1",
+                            Nom = "Déclaration 1 - Projet 1",
                             PiecesJointes = new List<PieceJointe>
                             {
-                                BuildPieceJointe( projet: 1, pieceJointe: 1, document: 1),
-                                BuildPieceJointe( projet: 1, pieceJointe: 2, document: 2),
-                                BuildPieceJointe( projet: 1, pieceJointe: 3, document: 3)
+                                MonterPieceJointe(
+                                    titre: "Pièce jointe 1 - Déclaration 1",
+                                    document: "Document 1 - Pièce jointe 1"),
+                                MonterPieceJointe(
+                                    titre: "Pièce jointe 2 - Déclaration 1",
+                                    attestation: "Attestation 1 - Pièce jointe 2",
+                                    professionnel: "Professionnel 1 - Attestation 1"),
+                                MonterPieceJointe(
+                                    titre:"Pièce jointe 3 - Déclaration 1",
+                                    document: "Document 2 - Pièce jointe 3",
+                                    attestation: "Attestation 2 - Pièce jointe 3",
+                                    professionnel: "Professionnel 2 - Attestation 2"
+                                    )
                             }
                         },
                         new Declaration
                         {
-                            Nom = "Déclaration 02 - projet 1",
+                            Nom = "Déclaration 2 - Projet 1",
                             PiecesJointes = new List<PieceJointe>
                             {
-                                BuildPieceJointe( projet: 1, pieceJointe: 4, document: 4),
-                                BuildPieceJointe( projet: 1, pieceJointe: 5, document: 5),
+                                MonterPieceJointe(
+                                    titre: "Pièce jointe 4 - Déclaration 2",
+                                    document: "Document 3 - Pièce jointe 4"),
+                                MonterPieceJointe(
+                                    titre:"Pièce jointe 5 - Déclaration 2",
+                                    document: "Document 4 - Pièce jointe 5",
+                                    attestation: "Attestation 3 - Pièce jointe 5",
+                                    professionnel: "Professionnel 3 - Attestation 3"
+                                    )
                             }
+                        },
+                        new Declaration
+                        {
+                            Nom = "Déclaration 3 - projet 1",
                         }
                     }
                 },
@@ -42,79 +63,60 @@ namespace DapperFormation.EfPreparation.Seed
                     {
                         new Declaration
                         {
-                            Nom = "Déclaration 03 - projet 2",
+                            Nom = "Déclaration 4 - projet 2",
                             PiecesJointes = new List<PieceJointe>
                             {
-                                BuildPieceJointe( projet: 2, pieceJointe: 6, document: 6),
-                                BuildPieceJointe( projet: 2, pieceJointe: 7, document: 7),
+                                MonterPieceJointe(
+                                    titre: "Pièce jointe 6 - Déclaration 4",
+                                    document: "Document 5 - Pièce jointe 6"),
+                                MonterPieceJointe(
+                                    titre: "Pièce jointe 7 - Déclaration 4",
+                                    document: "Document 6 - Pièce jointe 7"),
                             }
                         },
                         new Declaration
                         {
-                            Nom = "Déclaration 04 - projet 2",
+                            Nom = "Déclaration 5 - projet 2",
                             PiecesJointes = new List<PieceJointe>
                             {
-                                BuildPieceJointe( projet: 2, pieceJointe: 8, document: 8),
-                                BuildPieceJointe( projet: 2, pieceJointe: 9, document: 9),
-                                BuildPieceJointe( projet: 2, pieceJointe: 10, document: 10)
-                            }
-                        },
-                        new Declaration
-                        {
-                            Nom = "Déclaration 05 - projet 2",
-                            PiecesJointes = new List<PieceJointe>
-                            {
-                                BuildPieceJointe( projet: 2, pieceJointe: 11, document: 11),
+                                 MonterPieceJointe(
+                                    titre:"Pièce jointe 8 - Déclaration 5",
+                                    document: "Document 7 - Pièce jointe 8",
+                                    attestation: "Attestation 4 - Pièce jointe 8",
+                                    professionnel: "Professionnel 4 - Attestation 4"
+                                    ),
+                                 MonterPieceJointe(
+                                    titre: "Pièce jointe 9 - Déclaration 5",
+                                    document: "Document 8 - Pièce jointe 9"),
                             }
                         }
                     }
                 },
-
+                new Projet
+                {
+                    Nom = "Projet 3",
+                },
             };
 
-            ef.AddRange(listProjets);
+            ef.Projets.AddRange(listProjets);
             ef.SaveChanges();
         }
 
-        public static PieceJointe BuildPieceJointe(int projet, int pieceJointe, int document)
+        public static PieceJointe MonterPieceJointe(
+            string titre, string document = null, string attestation = null, string professionnel = null)
         {
-            return CreerPieceJointe(pieceJointe, projet, CreerDocument(document, pieceJointe, projet), CreerAttestation(document, pieceJointe, projet, CreerProfessionnel(document, document, pieceJointe, projet)));
-        }
+            var pieceJointe = new PieceJointe { Titre = titre };
 
-        private static PieceJointe CreerPieceJointe(int pieceJointe, int projet, Document document, Attestation attestation)
-        {
-            return new PieceJointe
-            {
-                Titre = $"Piece Jointe {pieceJointe} - projet {projet}",
-                Document = document,
-                Attestation = attestation
-            };
-        }
+            if (document is not null)
+                pieceJointe.Document = new Document { NomFichier = document };
 
-        private static Document CreerDocument(int document, int pieceJointe, int projet)
-        {
-            return new Document
-            {
-                NomFichier = $"Document {document} - PieceJointe {pieceJointe} - Projet {projet}"
-            };
-        }
+            if (attestation is not null)
+                pieceJointe.Attestation = new Attestation { Nom = attestation };
 
-        private static Attestation CreerAttestation(int attestation, int pieceJointe, int projet, Professionnel professionnel)
-        {
-            return new Attestation
-            {
-                Nom = $"Attestation {attestation} - PieceJointe {pieceJointe} - Projet {projet}",
-                Professionnel = professionnel
-            };
-        }
+            if (professionnel is not null)
+                pieceJointe.Attestation.Professionnel = new Professionnel { Nom = professionnel };
 
-
-        private static Professionnel CreerProfessionnel(int professionel, int attestation, int pieceJointe, int projet)
-        {
-            return new Professionnel
-            {
-                Nom = $"Professionnel {professionel} - Attestation {attestation} - PieceJointe {pieceJointe} - Projet {projet}"
-            };
+            return pieceJointe;
         }
     }
 }

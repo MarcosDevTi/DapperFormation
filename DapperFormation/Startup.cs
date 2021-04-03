@@ -43,7 +43,7 @@ namespace DapperFormation
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Projets}/{action=Index}/{id?}");
+                    pattern: "{controller=Dapper}/{action=Index}/{id?}");
             });
         }
     }

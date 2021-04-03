@@ -6,7 +6,7 @@ namespace DapperFormation.Models
     {
         public int Id { get; set; }
         public string Nom { get; set; }
-        public int ProjetId { get; set; }
+        public int? ProjetId { get; set; }
         public IEnumerable<PieceJointe> PiecesJointes { get; set; }
     }
 }

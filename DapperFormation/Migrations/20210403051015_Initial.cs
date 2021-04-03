@@ -2,7 +2,7 @@
 
 namespace DapperFormation.Migrations
 {
-    public partial class InitData : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -71,7 +71,8 @@ namespace DapperFormation.Migrations
                 {
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    id_projet = table.Column<int>(type: "INTEGER", nullable: false)
+                    nom = table.Column<string>(type: "TEXT", nullable: true),
+                    id_projet = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,41 +82,41 @@ namespace DapperFormation.Migrations
                         column: x => x.id_projet,
                         principalTable: "oe_projet",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "oe_piece_jointe",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Code = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Titre = table.Column<string>(type: "TEXT", nullable: true),
-                    id_document = table.Column<int>(type: "INTEGER", nullable: false),
-                    id_attestation = table.Column<int>(type: "INTEGER", nullable: false),
-                    id_declaration = table.Column<int>(type: "INTEGER", nullable: false)
+                    id_document = table.Column<int>(type: "INTEGER", nullable: true),
+                    id_attestation = table.Column<int>(type: "INTEGER", nullable: true),
+                    id_declaration = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_oe_piece_jointe", x => x.id);
+                    table.PrimaryKey("code", x => x.Code);
                     table.ForeignKey(
                         name: "FK_oe_piece_jointe_oe_attestation_id_attestation",
                         column: x => x.id_attestation,
                         principalTable: "oe_attestation",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_oe_piece_jointe_oe_declaration_id_declaration",
                         column: x => x.id_declaration,
                         principalTable: "oe_declaration",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_oe_piece_jointe_oe_document_id_document",
                         column: x => x.id_document,
                         principalTable: "oe_document",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

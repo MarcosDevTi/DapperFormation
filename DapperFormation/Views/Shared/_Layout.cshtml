@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fr-ca">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,12 +13,21 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark bg-gradient border-bottom border-secondary box-shadow">
             <div class="container">
-                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Dapper formation</a>
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Dapper" asp-action="Index">Dapper formation</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Projets" asp-action="Index">Ef</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Dapper" asp-action="Index">Dapper</a>
+                        </li>
+                    </ul>
+                </div>
                 <a class="nav-link p-2 d-flex" href="https://github.com/MarcosDevTi/DapperFormation" target="_blank" rel="noopener">
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" class="navbar-nav-svg d-inline-block align-text-top text-light" viewBox="0 0 512 499.36" role="img">
                         <title>GitHub</title>
@@ -31,7 +40,7 @@
         </nav>
     </header>
     <div class="container">
-            @RenderBody()
+        @RenderBody()
     </div>
 
     <footer class="border-top footer text-muted border-secondary">
