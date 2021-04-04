@@ -1,10 +1,15 @@
 ﻿@model IEnumerable<Projet>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = TempData["Titre"];
 }
 
-<h1>Projets EF</h1>
+@{
+    String pageRoute = ViewContext.RouteData.Values["action"].ToString();
+
+    <h1>@pageRoute</h1>
+}
+
 
 <ul class="list-group">
     @foreach (var projet in Model)
@@ -40,7 +45,6 @@
                                                             </div>
                                                         </div>
                                                     }
-
                                                 </div>
                                             </div>
                                         </li>

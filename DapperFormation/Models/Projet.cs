@@ -6,6 +6,6 @@ namespace DapperFormation.Models
     {
         public int Id { get; set; }
         public string Nom { get; set; }
-        public IEnumerable<Declaration> Declarations { get; set; }
+        public ICollection<Declaration> Declarations { get; set; } = new List<Declaration>();
     }
 }

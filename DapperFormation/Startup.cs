@@ -1,10 +1,13 @@
+
 using DapperFormation.EfPreparation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Data;
 
 namespace DapperFormation
 {
@@ -20,6 +23,7 @@ namespace DapperFormation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EfContext>(conn => conn.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IDbConnection>(_ => new SqliteConnection(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
         }
 
@@ -43,7 +47,7 @@ namespace DapperFormation
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Dapper}/{action=Index}/{id?}");
+                    pattern: "{controller=Projets}/{action=Dapper_ListProjets}/{id?}");
             });
         }
     }
