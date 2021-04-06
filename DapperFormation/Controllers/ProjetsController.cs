@@ -21,7 +21,7 @@ namespace DapperFormation.Controllers
             _dapperConnection = dapperConnection;
         }
 
-        public async Task<IActionResult> Ef_ListProjets()
+        public async Task<IActionResult> EfListProjets()
         {
             var projets = await _efContext.Projets
                 .IncludePieceJointe().ThenInclude(pj => pj.Attestation).ThenInclude(a => a.Professionnel)
@@ -30,21 +30,20 @@ namespace DapperFormation.Controllers
             return View("Index", projets);
         }
 
-        public async Task<IActionResult> Dapper_ListProjets()
+        public async Task<IActionResult> DapperListProjets()
         {
             var sql = @"select 
                         -- projet
                         proj.id, proj.nom,
                         -- déclaration
-                        decl.id, decl.nom, decl.id_projet,
-                        -- Pièce jointe
-                        pj.code, pj.titre, pj.id_document DocumentId, pj.id_attestation AttestationId, 
-                            pj.id_declaration DeclarationId,
+                        decl.id, decl.nom, decl.id_projet ProjetId,
+                        -- pièce jointe
+                        pj.code Id, pj.titre, pj.id_document DocumentId, 
+                        pj.id_attestation AttestationId, pj.id_declaration DeclarationId,
                         -- document
                         doc.id, doc.nom_fichier NomFichier,
                         -- attestation
                         attest.id, attest.nom, attest.id_professionnel ProfessionnelId,
-                        -- professionnel
                         prof.id, prof.nom
                         from oe_projet proj
                         left join oe_declaration decl on decl.id_projet = proj.id
@@ -66,8 +65,8 @@ namespace DapperFormation.Controllers
 
                     if (decl is not null)
                     {
-                        var estDeclarationDéjàAjouté = dictDecl.TryGetValue(decl.Id, out Declaration declaration);
-                        if (!estDeclarationDéjàAjouté)
+                        var estDéclarationDèjàAjouté = dictDecl.TryGetValue(decl.Id, out Declaration declaration);
+                        if (!estDéclarationDèjàAjouté)
                             dictDecl.Add(decl.Id, declaration = decl);
 
                         if (pj is not null)
@@ -81,13 +80,12 @@ namespace DapperFormation.Controllers
                             declaration.PiecesJointes.Add(pj);
                         }
 
-                        if (!estDeclarationDéjàAjouté)
-                            projet.Declarations.Add(declaration);
+                        if (!estDéclarationDèjàAjouté)
+                            projet.Declarations.Add(decl);
                     }
 
                     return proj;
-                }, splitOn: "id, id, code, id, id, id");
-
+                });
             return View("Index", dictProj.Values);
         }
     }

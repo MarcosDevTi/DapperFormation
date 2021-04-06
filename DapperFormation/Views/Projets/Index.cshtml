@@ -2,14 +2,9 @@
 
 @{
     ViewData["Title"] = TempData["Titre"];
-}
-
-@{
     String pageRoute = ViewContext.RouteData.Values["action"].ToString();
-
-    <h1>@pageRoute</h1>
+    <h1>@pageRoute dd</h1>
 }
-
 
 <ul class="list-group">
     @foreach (var projet in Model)
@@ -41,7 +36,7 @@
                                                                 @pieceJointe.Attestation.Nom
                                                             </h6>
                                                             <div class="card bg-dark pl-1">
-                                                                @pieceJointe.Attestation.Professionnel.Nom
+                                                                @pieceJointe.Attestation?.Professionnel?.Nom
                                                             </div>
                                                         </div>
                                                     }

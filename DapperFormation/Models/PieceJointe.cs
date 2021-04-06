@@ -2,7 +2,7 @@
 {
     public class PieceJointe
     {
-        public int Code { get; set; }
+        public int Id { get; set; }
         public string Titre { get; set; }
         public int? DocumentId { get; set; }
         public Document Document { get; set; }
