@@ -38,7 +38,7 @@ namespace DapperFormation.Controllers
                         -- déclaration
                         decl.id, decl.nom, decl.id_projet ProjetId,
                         -- pièce jointe
-                        pj.code Id, pj.titre, pj.id_document DocumentId, 
+                        pj.code, pj.titre, pj.id_document DocumentId, 
                         pj.id_attestation AttestationId, pj.id_declaration DeclarationId,
                         -- document
                         doc.id, doc.nom_fichier NomFichier,
@@ -85,7 +85,7 @@ namespace DapperFormation.Controllers
                     }
 
                     return proj;
-                });
+                }, splitOn: "id, id, code, id, id, id");
             return View("Index", dictProj.Values);
         }
     }
