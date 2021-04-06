@@ -65,8 +65,8 @@ namespace DapperFormation.Controllers
 
                     if (decl is not null)
                     {
-                        var estDéclarationDèjàAjouté = dictDecl.TryGetValue(decl.Id, out Declaration declaration);
-                        if (!estDéclarationDèjàAjouté)
+                        var estDéclarationDéjàAjouté = dictDecl.TryGetValue(decl.Id, out Declaration declaration);
+                        if (!estDéclarationDéjàAjouté)
                             dictDecl.Add(decl.Id, declaration = decl);
 
                         if (pj is not null)
@@ -80,7 +80,7 @@ namespace DapperFormation.Controllers
                             declaration.PiecesJointes.Add(pj);
                         }
 
-                        if (!estDéclarationDèjàAjouté)
+                        if (!estDéclarationDéjàAjouté)
                             projet.Declarations.Add(decl);
                     }
 
